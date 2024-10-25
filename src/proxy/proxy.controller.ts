@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 export class ProxyController {
   constructor(private readonly proxyService: ProxyService) {}
 
-  @All('*')
+  @All()
   public async forwardRequest(
     @Req() request: Request,
     @Res() response: Response,
