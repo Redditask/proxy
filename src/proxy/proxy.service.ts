@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Request } from 'express';
-import { AxiosHeaders } from 'axios';
+import { AxiosHeaders, AxiosRequestConfig } from 'axios';
 
 @Injectable()
 export class ProxyService {
@@ -15,12 +15,20 @@ export class ProxyService {
     if (!targetUrl) throw new Error('X-Proxy-Target-Url Missing');
 
     headers.delete('x-proxy-target-url');
+    headers.delete('host');
+    headers.delete('connection');
+    headers.delete('accept-encoding');
+
+    const config: AxiosRequestConfig = {
+      headers,
+      url: targetUrl,
+      method: request.method,
+      data: request.body,
+    };
 
     try {
-      return await this.httpService.axiosRef.get(targetUrl, { headers });
+      return await this.httpService.axiosRef.request(config);
     } catch (error) {
-      console.log(error); //todo delete
-
       throw error;
     }
   }
