@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Request } from 'express';
-import { AxiosHeaders, AxiosRequestConfig } from 'axios';
+import { AxiosHeaders, AxiosRequestConfig, head } from "axios";
 
 @Injectable()
 export class ProxyService {
@@ -25,9 +25,13 @@ export class ProxyService {
       data: request.body,
     };
 
+    console.log(targetUrl, headers); //todo delete
+
     try {
       return await this.httpService.axiosRef.request(config);
     } catch (error) {
+      console.log(error.response); //todo delete
+
       this.logger.error(`Error: ${error.message} for ${request.url}`);
 
       throw error;
