@@ -12,9 +12,15 @@ export class ProxyService {
   public async forwardRequest(request: Request) {
     const headers = this.convertHeadersToAxios(request.headers);
 
+    const targetUrl = headers['x-proxy-target-url'];
+
+    if (!targetUrl) throw new Error('X-Proxy-Target-Url Missing');
+
+    headers.delete('x-proxy-target-url');
+
     const config: AxiosRequestConfig = {
       headers,
-      url: request.url,
+      url: targetUrl,
       method: request.method,
       data: request.body,
     };
