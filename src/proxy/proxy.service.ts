@@ -18,6 +18,12 @@ export class ProxyService {
     headers.delete('host');
     headers.delete('connection');
     headers.delete('accept-encoding');
+    headers.set('x-li-lang', 'en_US');
+    headers.set(
+      'x-li-track',
+      '{"clientVersion":"1.13.11186","mpVersion":"1.13.11186","osName":"web","timezoneOffset":-5,"timezone":"America/New_York","deviceFormFactor":"DESKTOP","mpName":"voyager-web","displayDensity":1,"displayWidth":1920,"displayHeight":1080}',
+    );
+    headers.set('accept-language', 'en-US,en;q=0.9');
 
     const config: AxiosRequestConfig = {
       headers,
@@ -29,6 +35,8 @@ export class ProxyService {
     try {
       return await this.httpService.axiosRef.request(config);
     } catch (error) {
+      console.log(error);
+
       throw error;
     }
   }
