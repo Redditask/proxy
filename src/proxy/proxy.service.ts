@@ -27,10 +27,12 @@ export class ProxyService {
       }),
     };
 
+    console.log(config); //todo delete
+
     try {
       return await this.httpService.axiosRef.request(config);
     } catch (error) {
-      console.log(error);
+      console.log(error); //todo delete
 
       throw error;
     }
