@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Request } from 'express';
-import { AxiosHeaders, AxiosRequestConfig, head } from "axios";
+import { AxiosHeaders, AxiosRequestConfig } from 'axios';
 
 @Injectable()
 export class ProxyService {
