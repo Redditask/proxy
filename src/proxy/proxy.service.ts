@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Request } from 'express';
 import { AxiosHeaders, AxiosRequestConfig } from 'axios';
+import { Agent } from 'https';
 
 @Injectable()
 export class ProxyService {
@@ -23,6 +24,9 @@ export class ProxyService {
       url: targetUrl,
       method: request.method,
       data: request.body,
+      httpsAgent: new Agent({
+        rejectUnauthorized: false,
+      }),
     };
 
     console.log(targetUrl, headers); //todo delete
