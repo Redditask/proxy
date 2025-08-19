@@ -9,13 +9,13 @@ export class AppService {
     private readonly configService: ConfigService,
   ) {}
 
-  public async getHello(): Promise<string> {
+  public async getStatistics(input: number, output: number) {
     const caffeineResult = await this.httpService.axiosRef.get(
       `${this.configService.get('CAFFEINE_URL')}/`,
     );
 
     if (!!caffeineResult.data) console.log('caffeine successfully completed');
 
-    return 'Hello World!';
+    return `I ${input} / O ${output}`;
   }
 }
