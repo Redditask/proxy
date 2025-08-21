@@ -3,6 +3,22 @@ import { AppService } from './app.service';
 import { Request, Response } from 'express';
 import { HttpService } from '@nestjs/axios';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import * as http from 'node:http';
+import * as https from 'node:https';
+
+const httpAgent = new http.Agent({
+  keepAlive: true,
+  keepAliveMsecs: 10000,
+  maxSockets: 300,
+  maxFreeSockets: 150,
+});
+
+const httpsAgent = new https.Agent({
+  keepAlive: true,
+  keepAliveMsecs: 10000,
+  maxSockets: 300,
+  maxFreeSockets: 150,
+});
 
 @Controller()
 export class AppController {
@@ -42,6 +58,8 @@ export class AppController {
 
     try {
       const forwardResponse = await this.httpService.axiosRef.get(targetUrl, {
+        httpAgent,
+        httpsAgent,
         headers: forwardHeaders,
         timeout: 2 * 60 * 1000,
       });
